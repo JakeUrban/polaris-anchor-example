@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  server:
+    container_name: "test-server"
+    build: .
+    volumes:
+      - ./data:/home/data
+    ports:
+      - "8000:8000"
+    command: python app/manage.py runserver --nostatic 0.0.0.0:8000
+  execute_outgoing_transactions:
+    container_name: "test-execute_outgoing_transactions"
+    build: .
+    volumes:
+      - ./data:/home/data
+    command: python app/manage.py execute_outgoing_transactions --loop
+  check_trustlines:
+    container_name: "test-check_trustlines"
+    build: .
+    volumes:
+      - ./data:/home/data
+    command: python app/manage.py check_trustlines --loop
+  watch_transaction:
+    container_name: "test-watch_transactions"
+    build: .
+    volumes:
+      - ./data:/home/data
+    command: python app/manage.py watch_transactions
+  poll_pending_deposits:
+    container_name: "test-poll_pending_deposits"
+    build: .
+    volumes:
+      - ./data:/home/data
+    command: python app/manage.py poll_pending_deposits --loop
